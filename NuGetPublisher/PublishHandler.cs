@@ -21,7 +21,7 @@ namespace NuGetPublisher
     {
         private const int VersionMaxValue = 10;
         private const string Configuration = "Release";
-        private const string GitHubSource = "https://nuget.pkg.github.com/kenannur/index.json";
+        private const string GitHubSource = "<GITHUB_SOURCE>";
         private const string GitHubApiKey = "<GITHUB_API_KEY>";
         private StringBuilder stringBuilder;
 
