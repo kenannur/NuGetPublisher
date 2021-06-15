@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ExtensionModel>
+
+    <!-- Project dosyalarına sağ tıkla açılan context menüsündeki Publish kategorisinin içine "Publish to GitHub" komutunu ekler -->
+    <Extension path = "/MonoDevelop/Ide/ContextMenu/ProjectPad/Publish">
+        <Condition id="ItemType" value="Project">
+            <CommandItem id="NuGetPublisher.PublishType.ToGitHub" />
+        </Condition>
+    </Extension>
+
+    <!-- Üstteki menüdeki Build menüsü altına "Publish to GitHub" komutunu ekler -->
+    <Extension path = "/MonoDevelop/Ide/MainMenu/Build">
+        <CommandItem id="NuGetPublisher.PublishType.ToGitHub" />
+    </Extension>
+
+    <!-- Publish to GitHub komutunun tanımı -->
+    <Extension path = "/MonoDevelop/Ide/Commands/Edit">
+        <Command id = "NuGetPublisher.PublishType.ToGitHub"
+                 defaultHandler = "NuGetPublisher.PublishHandler"
+                 _label = "Publish to GitHub..." />
+    </Extension>
+</ExtensionModel>
