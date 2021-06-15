@@ -38,7 +38,7 @@ namespace NuGetPublisher
                 Pack(selectedProject);
                 Thread.Sleep(1000);
                 Push(selectedProject, newPackageVersion);
-                ShowDialog();
+                ShowResultDialog();
             }
         }
 
@@ -49,6 +49,13 @@ namespace NuGetPublisher
             var packageVersionElement = projectRootElement.Properties.FirstOrDefault(x => x.Name == "PackageVersion");
             newPackageVersion = packageVersionElement == null ? "1.0.0" : GetNextPackageVersion(packageVersionElement.Value);
             projectRootElement.AddProperty("PackageVersion", newPackageVersion);
+
+            var packageIdElement = projectRootElement.Properties.FirstOrDefault(x => x.Name == "PackageId");
+            if (packageIdElement == null)
+            {
+                projectRootElement.AddProperty("PackageId", project.Name);
+            }
+
             projectRootElement.Save();
         }
 
@@ -109,7 +116,7 @@ namespace NuGetPublisher
             }
         }
 
-        private void ShowDialog()
+        private void ShowResultDialog()
         {
             var dialog = new Dialog
             {
