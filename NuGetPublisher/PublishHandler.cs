@@ -116,6 +116,54 @@ namespace NuGetPublisher
             }
         }
 
+        private void ShowInputDialog()
+        {
+            var dialog = new Dialog("Project Metadata", null, DialogFlags.DestroyWithParent)
+            {
+                DefaultWidth = 300,
+                Resizable = true
+            };
+            dialog.SetPosition(WindowPosition.Center);
+
+            dialog.VBox.PackStart(GetInputWidget("Authors"));
+            dialog.VBox.PackStart(GetInputWidget("Repository"));
+            dialog.VBox.PackStart(GetInputWidget("Description"));
+
+            var checkButton = new CheckButton("Remember");
+            dialog.VBox.PackStart(checkButton);
+
+            var button = new Button
+            {
+                Label = "Apply"
+            };
+            button.ModifyBg(StateType.Normal, new Gdk.Color(0, 200, 200));
+            button.ModifyFg(StateType.Normal, new Gdk.Color(255, 255, 255));
+            button.Clicked += (s, e) =>
+            {
+                var btn = s as Button;
+                var vBox = btn.Parent as VBox;
+                var inputChildren = vBox.Children.Take(3);
+                foreach (var child in inputChildren)
+                {
+                    var hb = child as HBox;
+                    var entry = hb.Children[1] as Entry;
+                    Console.WriteLine(entry.Text);
+                }
+                vBox.Parent.Destroy();
+            };
+            dialog.VBox.PackEnd(button);
+
+            dialog.ShowAll();
+        }
+
+        private Widget GetInputWidget(string labelText, string initialInput = "")
+        {
+            var hBox = new HBox();
+            hBox.PackStart(new Label(labelText));
+            hBox.PackEnd(new Entry(initialInput));
+            return hBox;
+        }
+
         private void ShowResultDialog()
         {
             var dialog = new Dialog
